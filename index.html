@@ -68,15 +68,19 @@
     <h2 class="row__title">Help us improve</h2>
     <p class="row__sub">Answer a few quick questions to help us shape our product.</p>
 
-    <form name="traction-survey" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you">
+    <form name="traction-survey" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="traction-survey">
+
+      <!-- Honeypot for bots -->
       <p class="hidden">
         <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
       </p>
 
+      <!-- Optional Email -->
       <label for="email">Email (optional):</label>
       <input type="email" id="email" name="email">
 
+      <!-- Likelihood to use service -->
       <label for="interest">How likely are you to use this service?</label>
       <select id="interest" name="interest" required>
         <option value="">Select</option>
@@ -87,17 +91,64 @@
         <option value="very_unlikely">Very unlikely</option>
       </select>
 
-      <label for="pain">What is your biggest challenge we can help with?</label>
-      <textarea id="pain" name="pain" rows="4" required></textarea>
+      <!-- Favorite Feature: 1-5 scale for each -->
+      <p>Rate each feature (1 = Not interested, 5 = Very interested):</p>
 
-      <label class="consent">
+      <label for="feature_forecast">Future Sales Forecast:</label>
+      <select id="feature_forecast" name="feature_forecast" required>
+        <option value="">Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label for="feature_social">Social Media Assistant:</label>
+      <select id="feature_social" name="feature_social" required>
+        <option value="">Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <label for="feature_staff">Barista on Demand:</label>
+      <select id="feature_staff" name="feature_staff" required>
+        <option value="">Select</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+      </select>
+
+      <!-- Pricing -->
+      <label for="pricing">How much would you be willing to pay per month?</label>
+      <select id="pricing" name="pricing" required>
+        <option value="">Select</option>
+        <option value="0-25">£0–25</option>
+        <option value="26-50">£26–50</option>
+        <option value="51-75">£51–75</option>
+        <option value="76-100">£76–100</option>
+        <option value="100+">£100+</option>
+      </select>
+
+      <!-- Open-ended challenge -->
+      <label for="pain">What is your biggest challenge we can help with?</label>
+      <textarea id="pain" name="pain" rows="4"></textarea>
+
+      <!-- GDPR Consent -->
+      <label>
         <input type="checkbox" name="consent" required>
         I consent to my data being collected and processed in line with GDPR.
       </label>
 
-      <button type="submit" class="btn-form">Submit</button>
+      <button type="submit">Submit</button>
     </form>
   </div>
 </section>
+
 </body>
 </html>
