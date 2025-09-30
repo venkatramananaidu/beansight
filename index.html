@@ -63,6 +63,41 @@
       </div>
     </div>
   </section>
+<section id="survey" class="sect">
+  <div class="row--center">
+    <h2 class="row__title">Help us improve</h2>
+    <p class="row__sub">Answer a few quick questions to help us shape our product.</p>
 
+    <form name="traction-survey" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/thank-you">
+      <input type="hidden" name="form-name" value="traction-survey">
+      <p class="hidden">
+        <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
+      </p>
+
+      <label for="email">Email (optional):</label>
+      <input type="email" id="email" name="email">
+
+      <label for="interest">How likely are you to use this service?</label>
+      <select id="interest" name="interest" required>
+        <option value="">Select</option>
+        <option value="very_likely">Very likely</option>
+        <option value="likely">Likely</option>
+        <option value="neutral">Neutral</option>
+        <option value="unlikely">Unlikely</option>
+        <option value="very_unlikely">Very unlikely</option>
+      </select>
+
+      <label for="pain">What is your biggest challenge we can help with?</label>
+      <textarea id="pain" name="pain" rows="4" required></textarea>
+
+      <label class="consent">
+        <input type="checkbox" name="consent" required>
+        I consent to my data being collected and processed in line with GDPR.
+      </label>
+
+      <button type="submit" class="btn-form">Submit</button>
+    </form>
+  </div>
+</section>
 </body>
 </html>
