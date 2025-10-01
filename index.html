@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -64,10 +65,11 @@
     </div>
   </section>
 <section id="survey" class="sect">
-  <div class="row--center">
-    <h2 class="row__title">Help us improve</h2>
-    <p class="row__sub">Answer a few quick questions to help us shape our product.</p>
-
+  <div class="services-row">
+       <div class="service-row">
+    <div class="service-box">
+         <h2 class="service-box__title">Help us improve</h2>
+         <p class="service-box__desc">Answer a few quick questions to help us shape our product.</p>
     <form name="traction-survey" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="traction-survey">
 
@@ -144,10 +146,14 @@
         <input type="checkbox" name="consent" required>
         I consent to my data being collected and processed in line with GDPR.
       </label>
-
-      <button type="submit">Submit</button>
+      <div class="hero-cta">
+        <button class="btn-primary" type="submit">Submit</button>
+      </div>    
     </form>
   </div>
+  </div>
+  </div>
+ 
 </section>
 
 </body>
