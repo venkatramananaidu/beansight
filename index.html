@@ -1,160 +1,946 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Our Services</title>
-
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Lato:300,400,600,700&display=swap" rel="stylesheet">
-
-  <!-- Stylesheet -->
+  <title>BeanSight — Know Tomorrow's Sales Today</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="service-box.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-</head> 
+    :root {
+      --cream: #F5F0E8;
+      --espresso: #1C0F0A;
+      --coffee: #3D1F12;
+      --caramel: #C47A3A;
+      --latte: #D4A96A;
+      --foam: #FAF7F2;
+      --steam: #EDE8DF;
+      --text: #2A1810;
+      --text-light: #6B4C3B;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 4rem;
+      background: rgba(245, 240, 232, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(196, 122, 58, 0.15);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: var(--espresso);
+      letter-spacing: -0.02em;
+    }
+
+    .nav-logo span { color: var(--caramel); }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-light);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--caramel); }
+
+    .nav-cta {
+      background: var(--espresso);
+      color: var(--cream) !important;
+      padding: 0.6rem 1.4rem;
+      border-radius: 2px;
+      transition: background 0.2s !important;
+    }
+
+    .nav-cta:hover { background: var(--caramel) !important; color: var(--cream) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      gap: 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -10%;
+      right: -5%;
+      width: 55%;
+      height: 110%;
+      background: radial-gradient(ellipse at center, rgba(196,122,58,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(196, 122, 58, 0.12);
+      border: 1px solid rgba(196, 122, 58, 0.3);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--caramel);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .hero-badge::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--caramel);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(1.4); }
+    }
+
+    .hero-content { animation: fadeUp 0.7s ease 0.1s both; }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 5vw, 4.2rem);
+      font-weight: 900;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      color: var(--espresso);
+      margin-bottom: 1.5rem;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--caramel);
+    }
+
+    .hero-sub {
+      font-size: 1.1rem;
+      line-height: 1.7;
+      color: var(--text-light);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--espresso);
+      color: var(--cream);
+      padding: 0.85rem 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 2px;
+      letter-spacing: 0.02em;
+      transition: all 0.25s;
+      border: 2px solid var(--espresso);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-primary:hover {
+      background: var(--caramel);
+      border-color: var(--caramel);
+      transform: translateY(-1px);
+      box-shadow: 0 8px 24px rgba(196,122,58,0.25);
+    }
+
+    .btn-secondary {
+      display: inline-block;
+      background: transparent;
+      color: var(--espresso);
+      padding: 0.85rem 2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      text-decoration: none;
+      border-radius: 2px;
+      letter-spacing: 0.02em;
+      transition: all 0.25s;
+      border: 2px solid rgba(28,15,10,0.2);
+      cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--caramel);
+      color: var(--caramel);
+    }
+
+    .hero-visual {
+      animation: fadeUp 0.7s ease 0.2s both;
+      position: relative;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 12px;
+      padding: 1.5rem 2rem;
+      box-shadow: 0 4px 40px rgba(28,15,10,0.08);
+      margin-bottom: 1rem;
+      border: 1px solid rgba(196,122,58,0.1);
+      transition: transform 0.3s;
+    }
+
+    .stat-card:hover { transform: translateY(-3px); }
+
+    .stat-card:nth-child(2) { margin-left: 2rem; }
+    .stat-card:nth-child(3) { margin-left: 1rem; }
+
+    .stat-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-light);
+      margin-bottom: 0.4rem;
+    }
+
+    .stat-value {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--espresso);
+    }
+
+    .stat-value span {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--caramel);
+      margin-left: 0.5rem;
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    .stat-bar {
+      height: 4px;
+      background: var(--steam);
+      border-radius: 2px;
+      margin-top: 0.8rem;
+      overflow: hidden;
+    }
+
+    .stat-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--caramel), var(--latte));
+      border-radius: 2px;
+      animation: fillBar 1.5s ease 0.8s both;
+    }
+
+    @keyframes fillBar {
+      from { width: 0; }
+    }
+
+    /* ── SERVICES ── */
+    #services {
+      padding: 6rem 4rem;
+      background: var(--foam);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--caramel);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 700;
+      color: var(--espresso);
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .section-sub {
+      margin-top: 1rem;
+      color: var(--text-light);
+      font-size: 1rem;
+      font-weight: 300;
+      max-width: 500px;
+      margin-inline: auto;
+      line-height: 1.7;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .service-card {
+      background: white;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      border: 1px solid rgba(196,122,58,0.1);
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--caramel), var(--latte));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 50px rgba(28,15,10,0.1);
+    }
+
+    .service-card:hover::before { transform: scaleX(1); }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(196,122,58,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--caramel);
+    }
+
+    .service-icon svg { width: 22px; height: 22px; }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--espresso);
+      margin-bottom: 0.8rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: var(--text-light);
+      font-weight: 300;
+    }
+
+    /* ── HOW IT WORKS ── */
+    #how {
+      padding: 6rem 4rem;
+      background: var(--espresso);
+      color: var(--cream);
+    }
+
+    #how .section-title { color: var(--cream); }
+    #how .section-tag { color: var(--latte); }
+    #how .section-sub { color: rgba(245,240,232,0.6); }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .steps::before {
+      content: '';
+      position: absolute;
+      top: 28px;
+      left: 10%;
+      right: 10%;
+      height: 1px;
+      background: rgba(196,122,58,0.3);
+    }
+
+    .step {
+      text-align: center;
+      position: relative;
+    }
+
+    .step-num {
+      width: 56px;
+      height: 56px;
+      background: var(--caramel);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: white;
+      margin: 0 auto 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    .step h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--cream);
+      margin-bottom: 0.6rem;
+    }
+
+    .step p {
+      font-size: 0.85rem;
+      line-height: 1.6;
+      color: rgba(245,240,232,0.6);
+      font-weight: 300;
+    }
+
+    /* ── SURVEY ── */
+    #survey {
+      padding: 6rem 4rem;
+      background: var(--cream);
+    }
+
+    .survey-container {
+      max-width: 700px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 16px;
+      padding: 3.5rem;
+      box-shadow: 0 8px 60px rgba(28,15,10,0.08);
+      border: 1px solid rgba(196,122,58,0.1);
+    }
+
+    .survey-container h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--espresso);
+      margin-bottom: 0.5rem;
+    }
+
+    .survey-container > p {
+      color: var(--text-light);
+      font-size: 0.95rem;
+      margin-bottom: 2rem;
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.01em;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 1.5px solid var(--steam);
+      border-radius: 6px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--foam);
+      transition: border-color 0.2s;
+      outline: none;
+      appearance: none;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--caramel);
+      background: white;
+    }
+
+    .form-group textarea { resize: vertical; min-height: 100px; }
+
+    .rating-group {
+      background: var(--foam);
+      border-radius: 8px;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 1rem;
+      border: 1.5px solid var(--steam);
+    }
+
+    .rating-group label {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text);
+      margin-bottom: 0.6rem;
+      display: block;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 0.4rem;
+    }
+
+    .rating-stars input[type="radio"] { display: none; }
+
+    .rating-stars label {
+      font-size: 1.4rem;
+      cursor: pointer;
+      color: var(--steam);
+      transition: color 0.15s;
+      margin: 0;
+    }
+
+    .rating-stars input:checked ~ label,
+    .rating-stars label:hover,
+    .rating-stars label:hover ~ label { color: var(--caramel); }
+
+    .rating-stars { flex-direction: row-reverse; justify-content: flex-end; }
+    .rating-stars label:hover,
+    .rating-stars label:hover ~ label { color: var(--caramel); }
+
+    .divider {
+      height: 1px;
+      background: var(--steam);
+      margin: 2rem 0;
+    }
+
+    .form-section-title {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--caramel);
+      font-weight: 500;
+      margin-bottom: 1rem;
+    }
+
+    .checkbox-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-size: 0.85rem;
+      color: var(--text-light);
+      cursor: pointer;
+      line-height: 1.5;
+    }
+
+    .checkbox-label input { margin-top: 2px; accent-color: var(--caramel); }
+
+    .hidden { display: none; }
+
+    /* ── BOOK A CALL ── */
+    #book {
+      padding: 6rem 4rem;
+      background: var(--foam);
+      text-align: center;
+    }
+
+    .book-card {
+      max-width: 600px;
+      margin: 0 auto;
+      background: var(--espresso);
+      border-radius: 16px;
+      padding: 3.5rem;
+      color: var(--cream);
+    }
+
+    .book-card h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+      color: var(--cream);
+    }
+
+    .book-card p {
+      color: rgba(245,240,232,0.7);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .calendly-placeholder {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px dashed rgba(196,122,58,0.4);
+      border-radius: 8px;
+      padding: 2rem;
+      margin-bottom: 1.5rem;
+      color: rgba(245,240,232,0.5);
+      font-size: 0.85rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--espresso);
+      color: rgba(245,240,232,0.5);
+      text-align: center;
+      padding: 2rem 4rem;
+      font-size: 0.8rem;
+      border-top: 1px solid rgba(196,122,58,0.15);
+    }
+
+    footer strong { color: var(--latte); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      .hero { grid-template-columns: 1fr; padding: 7rem 1.5rem 3rem; }
+      .hero-visual { display: none; }
+      #services, #how, #survey, #book { padding: 4rem 1.5rem; }
+      .services-grid { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr 1fr; }
+      .steps::before { display: none; }
+      .survey-container { padding: 2rem 1.5rem; }
+      .book-card { padding: 2rem 1.5rem; }
+    }
+  </style>
+</head>
 <body>
 
-<section class="sect hero">
-  <div class="row--center">
-    <h1 class="row__title hero__title">BeanSight</h1>
-    <p class="row__sub hero__sub">Transform your business with tailored analytics and actionable insights that help you thrive in the digital age.</p>
-  </div>
-  <div class="hero-cta">
-  <a href="#services" class="btn-primary">Explore Services</a>
-</div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bean<span>Sight</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#survey">Feedback</a></li>
+    <li><a href="#book" class="nav-cta">Book a call</a></li>
+  </ul>
+</nav>
 
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">Built for independent UK cafes</div>
+    <h1>Know <em>tomorrow's</em> sales today.</h1>
+    <p class="hero-sub">BeanSight uses AI to forecast your daily sales using weather, local events, and your own history — so you staff smarter, order less waste, and stop guessing.</p>
+    <div class="hero-actions">
+      <a href="#survey" class="btn-primary">Share your feedback</a>
+      <a href="#book" class="btn-secondary">Book a 20 min call →</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="stat-card">
+      <div class="stat-label">Forecast accuracy</div>
+      <div class="stat-value">87% <span>↑ vs gut feel</span></div>
+      <div class="stat-bar"><div class="stat-fill" style="width:87%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Avg. waste reduction</div>
+      <div class="stat-value">23% <span>per week</span></div>
+      <div class="stat-bar"><div class="stat-fill" style="width:23%"></div></div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Setup time</div>
+      <div class="stat-value">5 min <span>upload & go</span></div>
+      <div class="stat-bar"><div class="stat-fill" style="width:35%"></div></div>
+    </div>
+  </div>
 </section>
 
-      <div class="services-row">
-       <!-- <div class="service-box">
-          <div class="service-box_icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
-</svg></div>
-          <h3 class="service-box__title">Future Sales Forecast </h3>
-          <p class="service-box__desc">State-of-the-art AI models designed to power your business. From combining weather patterns and footfall trends to analyzing your existing sales data, our forecasts reveal hidden opportunities and deliver precise, actionable insights.</p>
-        </div>-->
-
-        <div class="service-box">
-          <div class="service-box__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-graph-up-arrow" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M0 0h1v15h15v1H0zm10 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-1 0V4.9l-3.613 4.417a.5.5 0 0 1-.74.037L7.06 6.767l-3.656 5.027a.5.5 0 0 1-.808-.588l4-5.5a.5.5 0 0 1 .758-.06l2.609 2.61L13.445 4H10.5a.5.5 0 0 1-.5-.5"/>
-</svg></div>
-          <h3 class="service-box__title">Future Sales Forecast </h3>
-          <p class="service-box__desc">State-of-the-art AI models designed to power your business. We integrate weather, footfall, and event data with your sales history to deliver accurate forecasts of your future sales.</p>
-        </div>
-
-        <div class="service-box">
-          <div class="service-box__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-raised-hand" viewBox="0 0 16 16">
-  <path d="M6 6.207v9.043a.75.75 0 0 0 1.5 0V10.5a.5.5 0 0 1 1 0v4.75a.75.75 0 0 0 1.5 0v-8.5a.25.25 0 1 1 .5 0v2.5a.75.75 0 0 0 1.5 0V6.5a3 3 0 0 0-3-3H6.236a1 1 0 0 1-.447-.106l-.33-.165A.83.83 0 0 1 5 2.488V.75a.75.75 0 0 0-1.5 0v2.083c0 .715.404 1.37 1.044 1.689L5.5 5c.32.32.5.754.5 1.207"/>
-  <path d="M8 3a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3"/>
-</svg></div>
-          <h3 class="service-box__title">Social Media Assistant</h3>
-          <p class="service-box__desc">Building on these insights, we craft tailored social media campaigns aligned with your audience and local events. You’ll know exactly when to act, and precisely how much to spend, turning predictions into measurable growth</p>
-        </div>
-
-        <div class="service-box">
-          <div class="service-box__icon"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cup-hot-fill" viewBox="0 0 16 16">
-  <path fill-rule="evenodd" d="M.5 6a.5.5 0 0 0-.488.608l1.652 7.434A2.5 2.5 0 0 0 4.104 16h5.792a2.5 2.5 0 0 0 2.44-1.958l.131-.59a3 3 0 0 0 1.3-5.854l.221-.99A.5.5 0 0 0 13.5 6zM13 12.5a2 2 0 0 1-.316-.025l.867-3.898A2.001 2.001 0 0 1 13 12.5"/>
-  <path d="m4.4.8-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 3.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 3.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 3 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 4.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.253.382l-.018.025-.005.008-.002.002A.5.5 0 0 1 6.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 6.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 6 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 7.4.8m3 0-.003.004-.014.019a4 4 0 0 0-.204.31 2 2 0 0 0-.141.267c-.026.06-.034.092-.037.103v.004a.6.6 0 0 0 .091.248c.075.133.178.272.308.445l.01.012c.118.158.26.347.37.543.112.2.22.455.22.745 0 .188-.065.368-.119.494a3 3 0 0 1-.202.388 5 5 0 0 1-.252.382l-.019.025-.005.008-.002.002A.5.5 0 0 1 9.6 4.2l.003-.004.014-.019a4 4 0 0 0 .204-.31 2 2 0 0 0 .141-.267c.026-.06.034-.092.037-.103a.6.6 0 0 0-.09-.252A4 4 0 0 0 9.6 2.8l-.01-.012a5 5 0 0 1-.37-.543A1.53 1.53 0 0 1 9 1.5c0-.188.065-.368.119-.494.059-.138.134-.274.202-.388a6 6 0 0 1 .253-.382l.025-.035A.5.5 0 0 1 10.4.8"/>
-</svg></div>
-          <h3 class="service-box__title">Barista on Demand</h3>
-          <p class="service-box__desc">
-          Access a pool of verified, skilled staff ready to step in during unexpected absences—keeping your operations seamless and your business running smoothly</p>
-        </div>
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-header fade-in">
+    <div class="section-tag">What we do</div>
+    <h2 class="section-title">Everything your cafe needs<br>to run one step ahead</h2>
+    <p class="section-sub">Three tools built specifically for independent UK cafes — no enterprise complexity, no IT team needed.</p>
+  </div>
+  <div class="services-grid">
+    <div class="service-card fade-in">
+      <div class="service-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+        </svg>
       </div>
+      <h3>Future Sales Forecast</h3>
+      <p>Upload your Square or Lightspeed export. We enrich it with local weather and events to predict your next 30 days — down to daily revenue and footfall peaks.</p>
     </div>
-  </section>
-<section id="survey" class="sect">
-  <div class="services-row">
-       <div class="service-row">
-    <div class="service-box">
-         <h2 class="service-box__title">Help us improve</h2>
-         <p class="service-box__desc">Answer a few quick questions to help us shape our product.</p>
+    <div class="service-card fade-in">
+      <div class="service-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+        </svg>
+      </div>
+      <h3>Social Media Assistant</h3>
+      <p>Know a rainy Tuesday is coming? We'll draft your promotion for it. Tailored campaigns timed to your forecast so you fill quiet periods before they hit.</p>
+    </div>
+    <div class="service-card fade-in">
+      <div class="service-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+        </svg>
+      </div>
+      <h3>Barista on Demand</h3>
+      <p>Your forecast says Saturday is going to be huge but your regular just called in sick. Access verified, skilled baristas ready to step in within hours.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="section-header fade-in">
+    <div class="section-tag">How it works</div>
+    <h2 class="section-title">From CSV to insight<br>in minutes</h2>
+    <p class="section-sub">No integration. No IT team. Just upload and go.</p>
+  </div>
+  <div class="steps">
+    <div class="step fade-in">
+      <div class="step-num">1</div>
+      <h4>Upload your sales data</h4>
+      <p>Export from Square, Lightspeed, or any POS. Drop the CSV into BeanSight.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">2</div>
+      <h4>We enrich it automatically</h4>
+      <p>Weather, local events, school holidays — all pulled in for your specific location.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">3</div>
+      <h4>Your dashboard is ready</h4>
+      <p>Sales patterns, weather impact, busiest days — all visualised and explained.</p>
+    </div>
+    <div class="step fade-in">
+      <div class="step-num">4</div>
+      <h4>Act on the forecast</h4>
+      <p>Staff smarter, order the right stock, and run targeted promotions on slow days.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SURVEY -->
+<section id="survey">
+  <div class="section-header fade-in">
+    <div class="section-tag">Help us build this</div>
+    <h2 class="section-title">We're talking to cafe owners.<br>We'd love to hear from you.</h2>
+    <p class="section-sub">2 minutes. Completely anonymous. Directly shapes what we build.</p>
+  </div>
+
+  <div class="survey-container fade-in">
+    <h2>Share your thoughts</h2>
+    <p>Your honest feedback helps us decide what to build first. No sales pitch, just listening.</p>
+
     <form name="traction-survey" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="traction-survey">
+      <p class="hidden"><label>Don't fill this out if you're human: <input name="bot-field"></label></p>
 
-      <!-- Honeypot for bots -->
-      <p class="hidden">
-        <label>Don’t fill this out if you’re human: <input name="bot-field"></label>
-      </p>
+      <div class="form-group">
+        <label for="email">Your email (optional — only if you'd like a follow-up)</label>
+        <input type="email" id="email" name="email" placeholder="hello@yourcafe.co.uk">
+      </div>
 
-      <!-- Optional Email -->
-      <label for="email">Email (optional):</label>
-      <input type="email" id="email" name="email">
+      <div class="form-group">
+        <label for="cafe_type">What best describes your business?</label>
+        <select id="cafe_type" name="cafe_type">
+          <option value="">Select</option>
+          <option value="independent_cafe">Independent cafe</option>
+          <option value="small_chain">Small chain (2–5 sites)</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="other">Other hospitality</option>
+        </select>
+      </div>
 
-      <!-- Likelihood to use service -->
-      <label for="interest">How likely are you to use this service?</label>
-      <select id="interest" name="interest" required>
-        <option value="">Select</option>
-        <option value="very_likely">Very likely</option>
-        <option value="likely">Likely</option>
-        <option value="neutral">Neutral</option>
-        <option value="unlikely">Unlikely</option>
-        <option value="very_unlikely">Very unlikely</option>
-      </select>
+      <div class="divider"></div>
+      <div class="form-section-title">The key question</div>
 
-      <!-- Favorite Feature: 1-5 scale for each -->
-      <p>Rate each feature (1 = Not interested, 5 = Very interested):</p>
+      <div class="form-group">
+        <label for="pmf">How would you feel if BeanSight no longer existed?</label>
+        <select id="pmf" name="pmf" required>
+          <option value="">Select</option>
+          <option value="very_disappointed">Very disappointed</option>
+          <option value="somewhat_disappointed">Somewhat disappointed</option>
+          <option value="not_disappointed">Not disappointed</option>
+          <option value="not_relevant">It's not relevant to me</option>
+        </select>
+      </div>
 
-      <label for="feature_forecast">Future Sales Forecast:</label>
-      <select id="feature_forecast" name="feature_forecast" required>
-        <option value="">Select</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <div class="divider"></div>
+      <div class="form-section-title">Rate our features</div>
 
-      <label for="feature_social">Social Media Assistant:</label>
-      <select id="feature_social" name="feature_social" required>
-        <option value="">Select</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <div class="form-group">
+        <label for="feature_forecast">Future Sales Forecast</label>
+        <select id="feature_forecast" name="feature_forecast" required>
+          <option value="">Select interest (1–5)</option>
+          <option value="1">1 — Not interested</option>
+          <option value="2">2</option>
+          <option value="3">3 — Neutral</option>
+          <option value="4">4</option>
+          <option value="5">5 — Very interested</option>
+        </select>
+      </div>
 
-      <label for="feature_staff">Barista on Demand:</label>
-      <select id="feature_staff" name="feature_staff" required>
-        <option value="">Select</option>
-        <option value="1">1</option>
-        <option value="2">2</option>
-        <option value="3">3</option>
-        <option value="4">4</option>
-        <option value="5">5</option>
-      </select>
+      <div class="form-group">
+        <label for="feature_social">Social Media Assistant</label>
+        <select id="feature_social" name="feature_social" required>
+          <option value="">Select interest (1–5)</option>
+          <option value="1">1 — Not interested</option>
+          <option value="2">2</option>
+          <option value="3">3 — Neutral</option>
+          <option value="4">4</option>
+          <option value="5">5 — Very interested</option>
+        </select>
+      </div>
 
-      <!-- Pricing -->
-      <label for="pricing">How much would you be willing to pay per month?</label>
-      <select id="pricing" name="pricing" required>
-        <option value="">Select</option>
-        <option value="0-25">£0–25</option>
-        <option value="26-50">£26–50</option>
-        <option value="51-75">£51–75</option>
-        <option value="76-100">£76–100</option>
-        <option value="100+">£100+</option>
-      </select>
+      <div class="form-group">
+        <label for="feature_staff">Barista on Demand</label>
+        <select id="feature_staff" name="feature_staff" required>
+          <option value="">Select interest (1–5)</option>
+          <option value="1">1 — Not interested</option>
+          <option value="2">2</option>
+          <option value="3">3 — Neutral</option>
+          <option value="4">4</option>
+          <option value="5">5 — Very interested</option>
+        </select>
+      </div>
 
-      <!-- Open-ended challenge -->
-      <label for="pain">What is your biggest challenge we can help with?</label>
-      <textarea id="pain" name="pain" rows="4"></textarea>
+      <div class="divider"></div>
+      <div class="form-section-title">Pricing & pain</div>
 
-      <!-- GDPR Consent -->
-      <label>
-        <input type="checkbox" name="consent" required>
-        I consent to my data being collected and processed in line with GDPR.
-      </label>
-      <div class="hero-cta">
-        <button class="btn-primary" type="submit">Submit</button>
-      </div>    
+      <div class="form-group">
+        <label for="pricing">How much would you pay per month for BeanSight?</label>
+        <select id="pricing" name="pricing" required>
+          <option value="">Select</option>
+          <option value="0-25">£0–25</option>
+          <option value="26-50">£26–50</option>
+          <option value="51-75">£51–75</option>
+          <option value="76-100">£76–100</option>
+          <option value="100+">£100+</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="current_method">How do you currently forecast how busy you'll be?</label>
+        <select id="current_method" name="current_method">
+          <option value="">Select</option>
+          <option value="gut_feel">Gut feel / experience</option>
+          <option value="spreadsheet">My own spreadsheet</option>
+          <option value="pos_reports">POS reports only</option>
+          <option value="tool">I use a tool already</option>
+          <option value="dont">I don't forecast</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="pain">What's your biggest operational headache on a busy day?</label>
+        <textarea id="pain" name="pain" placeholder="e.g. Never know how much milk to order, always caught short on staff at weekends..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="checkbox-label">
+          <input type="checkbox" name="consent" required>
+          I consent to my data being collected and processed in line with GDPR.
+        </label>
+      </div>
+
+      <button class="btn-primary" type="submit" style="width:100%;justify-content:center;text-align:center;">Submit feedback →</button>
     </form>
   </div>
-  </div>
-  </div>
- 
 </section>
+
+<!-- BOOK A CALL -->
+<section id="book">
+  <div class="book-card fade-in">
+    <h2>Talk to the founder</h2>
+    <p>We're booking 20-minute calls with independent cafe owners across the UK. No pitch — just a conversation about how you run your business and what would actually help.</p>
+    <div class="calendly-placeholder">
+      📅 Calendly booking widget — add your Calendly embed code here<br>
+      <small>e.g. &lt;div class="calendly-inline-widget" data-url="https://calendly.com/yourusername"&gt;&lt;/div&gt;</small>
+    </div>
+    <a href="mailto:hello@beansight.co.uk" class="btn-primary" style="background:var(--caramel);border-color:var(--caramel);">Or email us directly →</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <strong>BeanSight</strong> — Built for independent UK cafes &nbsp;·&nbsp; hello@beansight.co.uk &nbsp;·&nbsp; © 2025
+</footer>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
 
 </body>
 </html>
