@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BeanSight – Smarter Forecasting for Independent Cafes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0d0d0d;
+      --bg2: #141414;
+      --bg3: #1a1a1a;
+      --card: #1e1e1e;
+      --border: #2a2a2a;
+      --amber: #e8a945;
+      --amber-light: #f2c06e;
+      --amber-dim: rgba(232,169,69,0.12);
+      --green: #4eca8b;
+      --green-dim: rgba(78,202,139,0.1);
+      --red: #f0645a;
+      --red-dim: rgba(240,100,90,0.1);
+      --blue: #5b9cf6;
+      --text: #f0ece4;
+      --text-muted: #8a8070;
+      --text-mid: #b8ad9e;
+      --radius: 14px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 48px;
+      background: rgba(13,13,13,0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: 'Fraunces', serif;
+      font-size: 22px; font-weight: 700;
+      color: var(--amber);
+      letter-spacing: -0.3px;
+    }
+    .nav-logo span { color: var(--text); font-weight: 300; font-style: italic; }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-muted); text-decoration: none;
+      font-size: 14px; font-weight: 500;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      background: var(--amber); color: #0d0d0d !important;
+      padding: 8px 20px; border-radius: 8px;
+      font-weight: 600 !important; font-size: 14px !important;
+      transition: background 0.2s !important;
+    }
+    .nav-cta:hover { background: var(--amber-light) !important; color: #0d0d0d !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-glow {
+      position: absolute; top: 20%; left: 50%;
+      transform: translateX(-50%);
+      width: 700px; height: 400px;
+      background: radial-gradient(ellipse, rgba(232,169,69,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--amber-dim); border: 1px solid rgba(232,169,69,0.25);
+      color: var(--amber); font-size: 13px; font-weight: 500;
+      padding: 6px 16px; border-radius: 100px;
+      margin-bottom: 32px;
+      animation: fadeUp 0.6s ease both;
+    }
+    .hero-badge::before {
+      content: ''; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--amber);
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+    .hero h1 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(44px, 7vw, 84px);
+      font-weight: 700; line-height: 1.05;
+      letter-spacing: -2px;
+      margin-bottom: 24px;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+    .hero h1 em {
+      font-style: italic; color: var(--amber);
+    }
+    .hero p {
+      max-width: 520px; font-size: 18px;
+      color: var(--text-mid); line-height: 1.7;
+      margin-bottom: 40px;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+    .hero-actions {
+      display: flex; gap: 16px; align-items: center;
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+    .btn-primary {
+      background: var(--amber); color: #0d0d0d;
+      padding: 14px 32px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      display: inline-block;
+    }
+    .btn-primary:hover { background: var(--amber-light); transform: translateY(-1px); }
+    .btn-ghost {
+      color: var(--text-mid); font-size: 15px;
+      text-decoration: none; display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s;
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+    .btn-ghost:hover::after { transform: translateX(4px); }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── DASHBOARD MOCKUP ── */
+    .dashboard-wrap {
+      width: 100%; max-width: 960px;
+      margin: 64px auto 0;
+      padding: 0 24px;
+      animation: fadeUp 0.8s 0.4s ease both;
+    }
+    .dashboard {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+    }
+    .dashboard-bar {
+      background: var(--bg3); padding: 14px 20px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-r { background: #f0645a; }
+    .dot-y { background: #f5a623; }
+    .dot-g { background: #4eca8b; }
+    .dash-title {
+      margin-left: 12px; font-size: 13px; color: var(--text-muted);
+      font-weight: 500;
+    }
+    .dashboard-inner { padding: 28px; }
+    .dash-header {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 24px;
+    }
+    .dash-header h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 20px; font-weight: 600;
+      color: var(--text);
+    }
+    .dash-header p { font-size: 13px; color: var(--text-muted); margin-top: 2px; }
+    .dash-date {
+      font-size: 13px; color: var(--text-muted);
+      background: var(--bg3); border: 1px solid var(--border);
+      padding: 6px 14px; border-radius: 8px;
+    }
+
+    /* Stat cards */
+    .stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px; }
+    .stat-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+    }
+    .stat-label { font-size: 12px; color: var(--text-muted); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+    .stat-value { font-family: 'Fraunces', serif; font-size: 32px; font-weight: 700; line-height: 1; }
+    .stat-sub { font-size: 12px; color: var(--text-muted); margin-top: 6px; }
+    .stat-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 12px; font-weight: 600;
+      padding: 3px 10px; border-radius: 100px;
+      margin-top: 8px;
+    }
+    .pill-green { background: var(--green-dim); color: var(--green); }
+    .pill-amber { background: var(--amber-dim); color: var(--amber); }
+    .pill-red { background: var(--red-dim); color: var(--red); }
+
+    /* Chart */
+    .chart-area {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px;
+      margin-bottom: 20px;
+    }
+    .chart-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+    .chart-top span { font-size: 13px; font-weight: 500; }
+    .chart-legend { display: flex; gap: 16px; }
+    .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
+    .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
+
+    .chart-svg-wrap { width: 100%; }
+    svg.chart { width: 100%; height: 140px; overflow: visible; }
+
+    /* Insight cards */
+    .insight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .insight-card {
+      background: var(--bg3); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .insight-icon {
+      width: 38px; height: 38px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .icon-amber { background: var(--amber-dim); }
+    .icon-green { background: var(--green-dim); }
+    .insight-text strong { font-size: 14px; font-weight: 600; display: block; margin-bottom: 4px; }
+    .insight-text p { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
+    .insight-text .highlight { color: var(--amber); font-weight: 600; }
+    .insight-text .highlight-green { color: var(--green); font-weight: 600; }
+    .insight-text .highlight-red { color: var(--red); font-weight: 600; }
+    .signal-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+    .signal-tag {
+      font-size: 11px; font-weight: 500;
+      background: var(--bg); border: 1px solid var(--border);
+      color: var(--text-muted); padding: 4px 10px; border-radius: 100px;
+    }
+    .signal-tag.signal-red {
+      background: var(--red-dim); border-color: rgba(240,100,90,0.2);
+      color: var(--red);
+    }
+    .reviews-block {
+      margin-top: 16px;
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .reviews-label {
+      font-size: 11px; text-transform: uppercase; letter-spacing: 0.8px;
+      color: var(--text-muted); font-weight: 600; margin-bottom: 2px;
+    }
+    .review-item {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 10px; padding: 12px 14px;
+    }
+    .review-stars { font-size: 11px; color: var(--amber); margin-bottom: 5px; letter-spacing: 1px; }
+    .review-text { font-size: 12px; color: var(--text-mid); line-height: 1.55; font-style: italic; margin-bottom: 6px; }
+    .review-meta { font-size: 11px; color: var(--text-muted); }
+    .suggestion-row { display: flex; gap: 12px; align-items: flex-start; }
+    .suggestion-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .review-link {
+      display: inline-block; margin-top: 6px;
+      font-size: 11px; color: var(--amber);
+      text-decoration: none; font-weight: 500;
+      transition: opacity 0.2s;
+    }
+    .review-link:hover { opacity: 0.75; }
+    .cost-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .cost-row {
+      display: flex; justify-content: space-between; align-items: center;
+      font-size: 13px; padding: 8px 12px;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px;
+    }
+    .cost-row-total {
+      border-color: rgba(78,202,139,0.25);
+      background: var(--green-dim);
+    }
+    .cost-label { color: var(--text-mid); }
+    .cost-value { font-weight: 600; font-family: 'Fraunces', serif; font-size: 15px; }
+    .cost-pos { color: var(--green); }
+    .cost-neg { color: var(--red); }
+    .cost-note {
+      font-size: 12px; color: var(--text-muted);
+      line-height: 1.55; margin-top: 10px;
+      font-style: italic;
+    }
+
+    /* ── SURVEY + CALENDLY ── */
+    .survey-section {
+      padding: 100px 24px;
+      border-top: 1px solid var(--border);
+      background: var(--bg2);
+    }
+    .survey-inner {
+      max-width: 1000px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: start;
+    }
+    .survey-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 36px; }
+    .survey-form { display: flex; flex-direction: column; gap: 28px; }
+    .survey-field label:first-child {
+      display: block; font-size: 14px; font-weight: 600;
+      margin-bottom: 12px; color: var(--text);
+    }
+    .radio-group { display: flex; flex-direction: column; gap: 8px; }
+    .radio-group-wrap { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .radio-opt {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: var(--text-mid);
+      background: var(--card); border: 1px solid var(--border);
+      padding: 10px 14px; border-radius: 8px; cursor: pointer;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .radio-opt:hover { border-color: var(--amber); color: var(--text); }
+    .gdpr-opt { align-items: flex-start; font-size: 13px; line-height: 1.6; }
+    .gdpr-opt input { margin-top: 3px; }
+    .survey-input {
+      width: 100%; background: var(--card); border: 1px solid var(--border);
+      color: var(--text); padding: 12px 16px; border-radius: 8px;
+      font-size: 14px; font-family: 'DM Sans', sans-serif; outline: none;
+      transition: border-color 0.2s;
+    }
+    .survey-input:focus { border-color: var(--amber); }
+    .survey-input::placeholder { color: var(--text-muted); }
+    .survey-thanks {
+      background: var(--green-dim); border: 1px solid rgba(78,202,139,0.25);
+      color: var(--green); padding: 14px 18px; border-radius: 10px;
+      font-size: 14px; font-weight: 500; margin-top: 8px;
+    }
+
+    /* Calendly card */
+    .survey-right { position: sticky; top: 100px; }
+    .calendly-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 36px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .calendly-card h3 {
+      font-family: 'Fraunces', serif;
+      font-size: 30px; font-weight: 700;
+      line-height: 1.1; letter-spacing: -0.5px;
+      margin: 10px 0 14px;
+    }
+    .calendly-card h3 em { font-style: italic; color: var(--amber); }
+    .calendly-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; margin-bottom: 24px; }
+    .call-points {
+      list-style: none; display: flex; flex-direction: column; gap: 10px;
+      margin-bottom: 28px;
+    }
+    .call-points li { font-size: 14px; color: var(--text-mid); }
+    .call-points li::before { margin-right: 4px; }
+    .calendly-btn { display: block; text-align: center; width: 100%; }
+    .calendly-note {
+      font-size: 12px; color: var(--text-muted);
+      text-align: center; margin-top: 12px; margin-bottom: 0 !important;
+    }
+
+    @media (max-width: 768px) {
+      .survey-inner { grid-template-columns: 1fr; }
+      .survey-right { position: static; }
+    }
+
+    /* ── LOGOS / POS STRIP ── */
+    .pos-section {
+      padding: 80px 24px 0;
+      text-align: center;
+    }
+    .pos-section p { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 28px; font-weight: 500; }
+    .pos-logos {
+      display: flex; flex-wrap: wrap;
+      justify-content: center; align-items: center;
+      gap: 12px; max-width: 780px; margin: 0 auto;
+    }
+    .pos-pill {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text-mid); font-size: 13px; font-weight: 500;
+      padding: 8px 18px; border-radius: 100px;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .pos-pill:hover { border-color: var(--amber); color: var(--amber); }
+
+    /* ── HOW IT WORKS ── */
+    .how-section {
+      padding: 100px 24px;
+      max-width: 1000px; margin: 0 auto;
+    }
+    .section-eyebrow {
+      font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
+      color: var(--amber); font-weight: 600; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -1px; margin-bottom: 60px;
+    }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+    .step { position: relative; padding: 28px; }
+    .step::before {
+      content: ''; position: absolute; top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: linear-gradient(to bottom, var(--amber), transparent);
+      border-radius: 2px; opacity: 0.4;
+    }
+    .step-num {
+      font-family: 'Fraunces', serif; font-size: 48px;
+      font-weight: 700; color: var(--border);
+      line-height: 1; margin-bottom: 16px;
+    }
+    .step h4 { font-size: 16px; font-weight: 600; margin-bottom: 10px; }
+    .step p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+
+    /* ── METRICS ── */
+    .metrics-section {
+      padding: 80px 24px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .metrics-inner { max-width: 900px; margin: 0 auto; }
+    .metrics-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .metric-block {
+      padding: 40px 32px; text-align: center;
+      border-right: 1px solid var(--border);
+    }
+    .metric-block:last-child { border-right: none; }
+    .metric-num {
+      font-family: 'Fraunces', serif; font-size: 52px;
+      font-weight: 700; color: var(--amber); line-height: 1;
+      margin-bottom: 8px;
+    }
+    .metric-label { font-size: 14px; color: var(--text-muted); }
+    .metric-sub { font-size: 12px; color: var(--text-muted); margin-top: 4px; opacity: 0.6; }
+
+    /* ── CTA ── */
+    .cta-section {
+      padding: 120px 24px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .cta-glow {
+      position: absolute; bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 300px;
+      background: radial-gradient(ellipse, rgba(232,169,69,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .cta-section h2 {
+      font-family: 'Fraunces', serif;
+      font-size: clamp(36px, 5vw, 60px);
+      font-weight: 700; line-height: 1.1;
+      letter-spacing: -1.5px; margin-bottom: 20px;
+    }
+    .cta-section h2 em { font-style: italic; color: var(--amber); }
+    .cta-section p { font-size: 17px; color: var(--text-muted); margin-bottom: 40px; }
+    .cta-form {
+      display: flex; gap: 12px; justify-content: center;
+      flex-wrap: wrap;
+    }
+    .cta-input {
+      background: var(--card); border: 1px solid var(--border);
+      color: var(--text); padding: 14px 20px;
+      border-radius: 10px; font-size: 15px;
+      width: 300px; outline: none;
+      font-family: 'DM Sans', sans-serif;
+      transition: border-color 0.2s;
+    }
+    .cta-input:focus { border-color: var(--amber); }
+    .cta-input::placeholder { color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 40px 48px;
+      border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 16px;
+    }
+    .footer-logo {
+      font-family: 'Fraunces', serif; font-size: 18px;
+      font-weight: 700; color: var(--amber);
+    }
+    .footer-logo span { color: var(--text-muted); font-weight: 300; font-style: italic; }
+    footer p { font-size: 13px; color: var(--text-muted); }
+
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
+      .nav-links { display: none; }
+      .stat-row { grid-template-columns: 1fr 1fr; }
+      .insight-row { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; }
+      .metrics-grid { grid-template-columns: 1fr; }
+      .metric-block { border-right: none; border-bottom: 1px solid var(--border); }
+      footer { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Bean<span>sight</span></div>
+  <div class="nav-links">
+    <a href="#how">How it works</a>
+    <a href="#pos">Integrations</a>
+    <a href="#waitlist" class="nav-cta">Get Early Access</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-badge">Now in early access · UK independent cafes</div>
+  <h1>Forecast your sales for<br/>the <em>next 30 days</em></h1>
+  <p>BeanSight connects to your POS and delivers daily sales forecasts, staffing recommendations, and waste-reduction insights — built specifically for independent UK cafes.</p>
+  <div class="hero-actions">
+    <a href="#waitlist" class="btn-primary">Get Early Access</a>
+    <a href="#how" class="btn-ghost">See how it works</a>
+  </div>
+
+  <!-- DASHBOARD MOCKUP -->
+  <div class="dashboard-wrap">
+    <div class="dashboard">
+      <div class="dashboard-bar">
+        <div class="dot dot-r"></div>
+        <div class="dot dot-y"></div>
+        <div class="dot dot-g"></div>
+        <span class="dash-title">BeanSight Dashboard · Maple & Brew, Northgate</span>
+      </div>
+      <div class="dashboard-inner">
+        <div class="dash-header">
+          <div>
+            <h3>Tomorrow's Forecast</h3>
+            <p>Wednesday 11 Jun · based on 14 months of trading data</p>
+          </div>
+          <div class="dash-date">Updated 11:42pm</div>
+        </div>
+
+        <div class="stat-row">
+          <div class="stat-card">
+            <div class="stat-label">Predicted Sales</div>
+            <div class="stat-value">£ 1287</div>
+            <div class="stat-pill pill-green">↑ 12% vs last Wed</div>
+            <div class="stat-sub">Confidence: high</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Recommended Staff</div>
+            <div class="stat-value">4</div>
+            <div class="stat-pill pill-amber">+2 vs yesterday</div>
+            <div class="stat-sub">Peak 8:30am–2:30pm</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Est. Waste Saving</div>
+            <div class="stat-value">23%</div>
+            <div class="stat-pill pill-green">~£34 saved this week</div>
+            <div class="stat-sub">vs. unoptimised ordering</div>
+          </div>
+        </div>
+
+        <!-- Chart -->
+        <div class="chart-area">
+          <div class="chart-top">
+            <span>Hourly Sales Forecast</span>
+            <div class="chart-legend">
+              <div class="legend-item"><div class="legend-dot" style="background:#e8a945"></div>Tomorrow (forecast)</div>
+              <div class="legend-item"><div class="legend-dot" style="background:#3a3a3a"></div>Last Wednesday</div>
+            </div>
+          </div>
+          <div class="chart-svg-wrap">
+            <svg class="chart" viewBox="0 0 800 140" preserveAspectRatio="none">
+              <!-- Grid lines -->
+              <line x1="0" y1="30" x2="800" y2="30" stroke="#2a2a2a" stroke-width="1"/>
+              <line x1="0" y1="70" x2="800" y2="70" stroke="#2a2a2a" stroke-width="1"/>
+              <line x1="0" y1="110" x2="800" y2="110" stroke="#2a2a2a" stroke-width="1"/>
+
+              <!-- Last week line (grey) -->
+              <polyline
+                points="0,110 100,85 200,40 300,35 400,55 500,70 600,90 700,100 800,108"
+                fill="none" stroke="#3a3a3a" stroke-width="2" stroke-linejoin="round"/>
+
+              <!-- Forecast area fill -->
+              <path
+                d="M0,115 L100,75 L200,28 L300,22 L400,42 L500,60 L600,82 L700,95 L800,105 L800,140 L0,140 Z"
+                fill="url(#chartGrad)" opacity="0.3"/>
+
+              <!-- Forecast line (amber) -->
+              <polyline
+                points="0,115 100,75 200,28 300,22 400,42 500,60 600,82 700,95 800,105"
+                fill="none" stroke="#e8a945" stroke-width="2.5" stroke-linejoin="round"/>
+
+              <!-- Peak dot -->
+              <circle cx="300" cy="22" r="5" fill="#e8a945"/>
+              <text x="300" y="14" text-anchor="middle" fill="#e8a945" font-size="10" font-family="DM Sans">Peak</text>
+
+              <defs>
+                <linearGradient id="chartGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#e8a945"/>
+                  <stop offset="100%" stop-color="#e8a945" stop-opacity="0"/>
+                </linearGradient>
+              </defs>
+
+              <!-- X labels -->
+              <text x="0" y="135" fill="#555" font-size="10" font-family="DM Sans">7am</text>
+              <text x="100" y="135" fill="#555" font-size="10" font-family="DM Sans">8am</text>
+              <text x="200" y="135" fill="#555" font-size="10" font-family="DM Sans">9am</text>
+              <text x="300" y="135" fill="#555" font-size="10" font-family="DM Sans">10am</text>
+              <text x="400" y="135" fill="#555" font-size="10" font-family="DM Sans">12pm</text>
+              <text x="500" y="135" fill="#555" font-size="10" font-family="DM Sans">2pm</text>
+              <text x="600" y="135" fill="#555" font-size="10" font-family="DM Sans">4pm</text>
+              <text x="700" y="135" fill="#555" font-size="10" font-family="DM Sans">5pm</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Insight cards -->
+        <div class="insight-row">
+          <div class="insight-card">
+            <div class="insight-icon icon-amber">👥</div>
+            <div class="insight-text">
+              <strong>Staffing Recommendation</strong>
+              <p>Schedule <span class="highlight">2 additional staff</span> for the 8:30am–2:30pm window. Tomorrow is forecast to be <span class="highlight">sunny (19°C)</span> and there are <span class="highlight">3 local events within 1 mile</span> — a farmers market, a school fun run, and a charity pop-up. Footfall on comparable days runs <span class="highlight">22% higher</span>. Under-staffing this window risks queues, poor reviews, and lost regulars.</p>
+              <div class="signal-tags">
+                <span class="signal-tag">☀️ Sunny 19°C</span>
+                <span class="signal-tag">📍 3 nearby events</span>
+                <span class="signal-tag">📈 High footfall day</span>
+              </div>
+              <div class="reviews-block">
+                <div class="reviews-label">💷 Estimated labour cost impact</div>
+                <div class="cost-grid">
+                  <div class="cost-row">
+                    <span class="cost-label">2 staff × 6hrs × £12.21/hr</span>
+                    <span class="cost-value cost-neg">+£146.52</span>
+                  </div>
+                  <div class="cost-row">
+                    <span class="cost-label">Estimated extra revenue captured</span>
+                    <span class="cost-value cost-pos">+£310</span>
+                  </div>
+                  <div class="cost-row cost-row-total">
+                    <span class="cost-label">Net benefit</span>
+                    <span class="cost-value cost-pos">+£163.48</span>
+                  </div>
+                </div>
+                <p class="cost-note">Based on your average revenue per customer and comparable high-footfall days. Overstaffing this window on a quiet day costs ~£146 — understaffing it costs significantly more in lost sales.</p>
+              </div>
+            </div>
+          </div>
+          <div class="insight-card insight-card-tall">
+            <div class="insight-icon icon-green">♻️</div>
+            <div class="insight-text">
+              <strong>Waste Reduction</strong>
+              <p>Order <span class="highlight-green">23% less pastry and cold drink stock</span> for the weekend. A <span class="highlight-red">train strike on Saturday</span> at the nearby station — just under a mile away — is expected to reduce passing footfall significantly. Combined with a <span class="highlight-red">chilly forecast (9°C, overcast)</span>, demand for grab-and-go items will likely drop. Estimated saving: <span class="highlight-green">~£34 this week</span> vs your usual weekend order.</p>
+              <div class="signal-tags">
+                <span class="signal-tag signal-red">🚆 Train strike Sat</span>
+                <span class="signal-tag signal-red">🌥️ Chilly 9°C</span>
+                <span class="signal-tag">💰 Save ~£34</span>
+              </div>
+              <div class="reviews-block">
+                <div class="reviews-label">💡 Suggestions from recent reviews</div>
+                <div class="review-item">
+                  <div class="suggestion-row">
+                    <span class="suggestion-icon">📶</span>
+                    <div>
+                      <p class="review-text">Customers are mentioning <strong>slow WiFi speeds</strong> — consider upgrading your broadband plan or adding a dedicated guest network to improve dwell time and repeat visits.</p>
+                      <a class="review-link" href="https://reviews.beansight.co.uk/maple-brew/wifi" target="_blank">View related reviews →</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="review-item">
+                  <div class="suggestion-row">
+                    <span class="suggestion-icon">🪑</span>
+                    <div>
+                      <p class="review-text">Several regulars have noted <strong>limited seating during busy periods</strong> — a simple rearrangement during peak hours could improve the experience without extra cost.</p>
+                      <a class="review-link" href="https://reviews.beansight.co.uk/maple-brew/seating" target="_blank">View related reviews →</a>
+                    </div>
+                  </div>
+                </div>
+                <div class="review-item">
+                  <div class="suggestion-row">
+                    <span class="suggestion-icon">💳</span>
+                    <div>
+                      <p class="review-text">Customers flagged an <strong>occasional card payment issue</strong> — having a backup card reader available could prevent lost sales during peak times.</p>
+                      <a class="review-link" href="https://reviews.beansight.co.uk/maple-brew/payments" target="_blank">View related reviews →</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POS LOGOS -->
+<section class="pos-section" id="pos">
+  <p>Works with 8 major POS systems used across UK cafes</p>
+  <div class="pos-logos">
+    <div class="pos-pill">Square</div>
+    <div class="pos-pill">Lightspeed</div>
+    <div class="pos-pill">Epos Now</div>
+    <div class="pos-pill">SumUp</div>
+    <div class="pos-pill">Zettle by PayPal</div>
+    <div class="pos-pill">Clover</div>
+    <div class="pos-pill">Shopify POS</div>
+    <div class="pos-pill">Tabology</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section" id="how">
+  <div class="section-eyebrow">How it works</div>
+  <div class="section-title">From POS data to<br/>actionable insight</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Connect your POS</h4>
+      <p>Authorise BeanSight with your existing POS system in under 2 minutes. No manual exports. No spreadsheets. We handle the data pipeline.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>We build your model</h4>
+      <p>BeanSight trains a forecast model unique to your cafe — accounting for your trading patterns, local weather, UK public holidays, and seasonal trends.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>Act on your forecast</h4>
+      <p>Every evening you receive tomorrow's sales forecast, staffing recommendation, and stock guidance — so you start each day with a plan, not a guess.</p>
+    </div>
+  </div>
+</section>
+
+<!-- METRICS -->
+<section class="metrics-section">
+  <div class="metrics-inner">
+    <div class="metrics-grid">
+      <div class="metric-block">
+        <div class="metric-num">~14%</div>
+        <div class="metric-label">Average forecast accuracy (MAPE)</div>
+        <div class="metric-sub">Trained on real UK cafe data</div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-num">£34</div>
+        <div class="metric-label">Average weekly waste saving</div>
+        <div class="metric-sub">Per cafe, based on pilot data</div>
+      </div>
+      <div class="metric-block">
+        <div class="metric-num">8</div>
+        <div class="metric-label">UK POS systems supported</div>
+        <div class="metric-sub">No CSV exports needed</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="waitlist">
+  <div class="cta-glow"></div>
+  <h2>Ready to run your cafe<br/><em>one step ahead?</em></h2>
+  <p>Join the early access list. Free during beta. No credit card needed.</p>
+  <div class="cta-form">
+    <input class="cta-input" type="email" placeholder="your@email.com" />
+    <a href="#" class="btn-primary">Get Early Access</a>
+  </div>
+</section>
+
+<!-- PMF SURVEY + CALENDLY -->
+<section class="survey-section" id="survey">
+  <div class="survey-inner">
+    <div class="survey-left">
+      <div class="section-eyebrow">Help us build the right thing</div>
+      <h2 class="section-title" style="margin-bottom:12px;">2 minutes.<br/><em>Big impact.</em></h2>
+      <p class="survey-desc">We're validating BeanSight with real cafe owners. Your answers directly shape what we build next — and early respondents get free access at launch.</p>
+
+      <div class="survey-form" id="surveyForm">
+        <!-- Q1 -->
+        <div class="survey-field">
+          <label>How do you currently forecast sales?</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="forecast" value="gut"/> Gut feeling / experience</label>
+            <label class="radio-opt"><input type="radio" name="forecast" value="spreadsheet"/> Spreadsheet</label>
+            <label class="radio-opt"><input type="radio" name="forecast" value="pos"/> POS reports</label>
+            <label class="radio-opt"><input type="radio" name="forecast" value="nothing"/> I don't really forecast</label>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="survey-field">
+          <label>How many staff do you manage?</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="staff" value="1-3"/> 1–3</label>
+            <label class="radio-opt"><input type="radio" name="staff" value="4-7"/> 4–7</label>
+            <label class="radio-opt"><input type="radio" name="staff" value="8-15"/> 8–15</label>
+            <label class="radio-opt"><input type="radio" name="staff" value="15+"/> 15+</label>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="survey-field">
+          <label>Which POS system do you use?</label>
+          <div class="radio-group radio-group-wrap">
+            <label class="radio-opt"><input type="radio" name="pos" value="square"/> Square</label>
+            <label class="radio-opt"><input type="radio" name="pos" value="lightspeed"/> Lightspeed</label>
+            <label class="radio-opt"><input type="radio" name="pos" value="eposnow"/> Epos Now</label>
+            <label class="radio-opt"><input type="radio" name="pos" value="sumup"/> SumUp</label>
+            <label class="radio-opt"><input type="radio" name="pos" value="zettle"/> Zettle</label>
+            <label class="radio-opt"><input type="radio" name="pos" value="other"/> Other</label>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="survey-field">
+          <label>What's your biggest operational challenge? <span style="color:var(--text-muted);font-weight:400">(select all that apply)</span></label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="waste" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Food & stock waste</label>
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="staffing" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Staffing levels</label>
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="cashflow" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Cash flow visibility</label>
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="footfall" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Unpredictable footfall</label>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="survey-field">
+          <label>How likely are you to pay for a tool like BeanSight?</label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="radio" name="pay" value="definitely"/> Definitely — if it works</label>
+            <label class="radio-opt"><input type="radio" name="pay" value="probably"/> Probably, depends on price</label>
+            <label class="radio-opt"><input type="radio" name="pay" value="unlikely"/> Unlikely</label>
+            <label class="radio-opt"><input type="radio" name="pay" value="free-only"/> Only if it's free</label>
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div class="survey-field">
+          <label>Your email <span style="color:var(--text-muted);font-weight:400">(optional — to notify you at launch)</span></label>
+          <input type="email" class="survey-input" placeholder="hello@yourcafe.co.uk" id="surveyEmail"/>
+        </div>
+
+        <!-- GDPR Consent -->
+        <div class="survey-field">
+          <label class="radio-opt gdpr-opt">
+            <input type="checkbox" id="gdprConsent" style="accent-color:var(--amber);width:16px;height:16px;flex-shrink:0;"/>
+            <span>I agree to BeanSight storing and processing my data for the purpose of product research and updates. We will never share your data with third parties. <a href="/privacy" target="_blank" style="color:var(--amber);text-decoration:underline;">Privacy Policy</a></span>
+          </label>
+        </div>
+
+        <button class="btn-primary" style="width:100%;margin-top:8px;" onclick="submitSurvey()">Submit answers</button>
+        <div id="surveyThanks" style="display:none;" class="survey-thanks">
+          ✅ Thank you! Your answers have been recorded. We'll be in touch.
+        </div>
+      </div>
+    </div>
+
+    <!-- CALENDLY -->
+    <div class="survey-right">
+      <div class="calendly-card">
+        <div class="calendly-top">
+          <div class="section-eyebrow">Talk to the founder</div>
+          <h3>Book a free<br/><em>20-minute call</em></h3>
+          <p>Tell us about your cafe. We'll show you exactly how BeanSight would work for your setup — no pitch, just a conversation.</p>
+        </div>
+        <ul class="call-points">
+          <li>✔ Walk through a live forecast demo</li>
+          <li>✔ We'll answer any questions you have</li>
+          <li>✔ Free early access if you're a good fit</li>
+        </ul>
+        <a href="https://calendly.com/beansight/20min" target="_blank" class="btn-primary calendly-btn">Book a 20-min call →</a>
+        <p class="calendly-note">Opens Calendly · pick a time that suits you</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">Bean<span>sight</span></div>
+  <p>Built for independent UK cafes · beansight.co.uk</p>
+  <p>© 2025 BeanSight</p>
+</footer>
+
+<script>
+  function submitSurvey() {
+    const consent = document.getElementById('gdprConsent');
+    if (!consent.checked) {
+      consent.closest('.radio-opt').style.borderColor = 'var(--red)';
+      consent.closest('.radio-opt').style.color = 'var(--red)';
+      setTimeout(() => {
+        consent.closest('.radio-opt').style.borderColor = '';
+        consent.closest('.radio-opt').style.color = '';
+      }, 2000);
+      return;
+    }
+    const form = document.getElementById('surveyForm');
+    const thanks = document.getElementById('surveyThanks');
+    const btn = form.querySelector('button');
+    btn.style.display = 'none';
+    thanks.style.display = 'block';
+    thanks.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+</script>
+</body>
+</html>
