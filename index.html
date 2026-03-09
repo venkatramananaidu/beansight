@@ -39,6 +39,8 @@
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
+      width: 100%;
+      max-width: 100vw;
     }
 
     /* ── NAV ── */
@@ -81,6 +83,7 @@
       padding: 120px 24px 80px;
       position: relative;
       overflow: hidden;
+      width: 100%;
     }
     .hero-glow {
       position: absolute; top: 20%; left: 50%;
@@ -156,6 +159,7 @@
       margin: 64px auto 0;
       padding: 0 24px;
       animation: fadeUp 0.8s 0.4s ease both;
+      box-sizing: border-box;
     }
     .dashboard {
       background: var(--card);
@@ -163,6 +167,7 @@
       border-radius: 20px;
       overflow: hidden;
       box-shadow: 0 40px 120px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04);
+      width: 100%;
     }
     .dashboard-bar {
       background: var(--bg3); padding: 14px 20px;
@@ -225,8 +230,8 @@
     .legend-item { display: flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-muted); }
     .legend-dot { width: 8px; height: 8px; border-radius: 50%; }
 
-    .chart-svg-wrap { width: 100%; }
-    svg.chart { width: 100%; height: 140px; overflow: visible; }
+    .chart-svg-wrap { width: 100%; overflow: hidden; }
+    svg.chart { width: 100%; height: 140px; overflow: hidden; display: block; }
 
     /* Insight cards */
     .insight-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -304,7 +309,63 @@
       font-style: italic;
     }
 
-    /* ── SURVEY + CALENDLY ── */
+    /* ── PLATFORM PILLARS ── */
+    .platform-section {
+      padding: 100px 24px;
+      background: var(--bg2);
+      border-top: 1px solid var(--border);
+    }
+    .platform-inner { max-width: 1000px; margin: 0 auto; }
+    .pillars-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .pillar-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 20px; padding: 32px;
+      display: flex; flex-direction: column; gap: 14px;
+      transition: border-color 0.2s;
+    }
+    .pillar-card:hover { border-color: rgba(232,169,69,0.3); }
+    .pillar-active { border-color: rgba(232,169,69,0.25); background: linear-gradient(135deg, #1e1e1e, #221e18); }
+    .pillar-icon { font-size: 32px; }
+    .pillar-tag {
+      display: inline-block; font-size: 11px; font-weight: 600;
+      text-transform: uppercase; letter-spacing: 0.8px;
+      background: var(--amber-dim); color: var(--amber);
+      padding: 4px 10px; border-radius: 100px; width: fit-content;
+    }
+    .pillar-tag-blue {
+      background: rgba(91,156,246,0.1); color: var(--blue);
+    }
+    .pillar-card h3 {
+      font-family: 'Fraunces', serif; font-size: 22px;
+      font-weight: 700; line-height: 1.2;
+    }
+    .pillar-card p { font-size: 14px; color: var(--text-muted); line-height: 1.7; }
+    .pillar-list { list-style: none; display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .pillar-list li { font-size: 13px; color: var(--text-mid); }
+
+    /* ── TEAM ── */
+    .team-section { padding: 100px 24px; }
+    .team-inner { max-width: 1000px; margin: 0 auto; }
+    .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .team-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 16px; padding: 24px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .team-avatar {
+      width: 48px; height: 48px; border-radius: 12px;
+      background: var(--amber-dim); border: 1px solid rgba(232,169,69,0.25);
+      color: var(--amber); font-family: 'Fraunces', serif;
+      font-size: 16px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .team-card h4 { font-size: 15px; font-weight: 600; line-height: 1.3; }
+    .team-role {
+      font-size: 12px; color: var(--amber); font-weight: 500;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .team-card p { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+
     .survey-section {
       padding: 100px 24px;
       border-top: 1px solid var(--border);
@@ -312,7 +373,8 @@
     }
     .survey-inner {
       max-width: 1000px; margin: 0 auto;
-      display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: start;
+      display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: start;
+      width: 100%;
     }
     .survey-desc { font-size: 15px; color: var(--text-muted); line-height: 1.7; margin-bottom: 36px; }
     .survey-form { display: flex; flex-direction: column; gap: 28px; }
@@ -382,6 +444,7 @@
     .pos-section {
       padding: 80px 24px 0;
       text-align: center;
+      width: 100%;
     }
     .pos-section p { font-size: 13px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 28px; font-weight: 500; }
     .pos-logos {
@@ -401,6 +464,7 @@
     .how-section {
       padding: 100px 24px;
       max-width: 1000px; margin: 0 auto;
+      width: 100%;
     }
     .section-eyebrow {
       font-size: 12px; text-transform: uppercase; letter-spacing: 1.5px;
@@ -473,13 +537,13 @@
     .cta-section p { font-size: 17px; color: var(--text-muted); margin-bottom: 40px; }
     .cta-form {
       display: flex; gap: 12px; justify-content: center;
-      flex-wrap: wrap;
+      flex-wrap: wrap; width: 100%; max-width: 600px; margin: 0 auto;
     }
     .cta-input {
       background: var(--card); border: 1px solid var(--border);
       color: var(--text); padding: 14px 20px;
       border-radius: 10px; font-size: 15px;
-      width: 300px; outline: none;
+      flex: 1; min-width: 200px; max-width: 300px; outline: none;
       font-family: 'DM Sans', sans-serif;
       transition: border-color 0.2s;
     }
@@ -501,14 +565,72 @@
     footer p { font-size: 13px; color: var(--text-muted); }
 
     @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
+      /* Nav */
+      nav { padding: 14px 20px; }
       .nav-links { display: none; }
-      .stat-row { grid-template-columns: 1fr 1fr; }
+
+      /* Hero */
+      .hero { padding: 100px 16px 60px; }
+      .hero h1 { font-size: 36px; letter-spacing: -1px; }
+      .hero p { font-size: 15px; max-width: 100%; }
+      .hero-actions { flex-direction: column; align-items: stretch; gap: 12px; width: 100%; }
+      .btn-primary { width: 100%; text-align: center; box-sizing: border-box; }
+      .btn-ghost { justify-content: center; }
+
+      /* Dashboard */
+      .dashboard-wrap { padding: 0 12px; margin-top: 40px; }
+      .dashboard-inner { padding: 14px; }
+      .stat-row { grid-template-columns: 1fr 1fr; gap: 10px; }
+      .stat-value { font-size: 22px; }
+      .dash-header { flex-direction: column; gap: 8px; align-items: flex-start; }
+      .dash-date { font-size: 11px; }
       .insight-row { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; }
+      .chart-top { flex-direction: column; gap: 10px; align-items: flex-start; }
+      .chart-legend { flex-wrap: wrap; gap: 8px; }
+
+      /* POS */
+      .pos-section { padding: 60px 16px 0; }
+
+      /* How it works */
+      .how-section { padding: 60px 16px; }
+      .steps { grid-template-columns: 1fr; gap: 24px; }
+      .step { padding: 20px; }
+
+      /* Metrics */
+      .metrics-section { padding: 60px 16px; }
       .metrics-grid { grid-template-columns: 1fr; }
-      .metric-block { border-right: none; border-bottom: 1px solid var(--border); }
-      footer { flex-direction: column; align-items: flex-start; }
+      .metric-block { border-right: none; border-bottom: 1px solid var(--border); padding: 28px 20px; }
+      .metric-block:last-child { border-bottom: none; }
+      .metric-num { font-size: 40px; }
+
+      /* Platform pillars */
+      .platform-section { padding: 60px 16px; }
+      .pillars-grid { grid-template-columns: 1fr; gap: 16px; }
+
+      /* CTA */
+      .cta-section { padding: 80px 16px; }
+      .cta-form { flex-direction: column; align-items: stretch; }
+      .cta-input { width: 100%; max-width: 100%; box-sizing: border-box; }
+
+      /* Survey */
+      .survey-section { padding: 60px 16px; }
+      .survey-inner { grid-template-columns: 1fr; gap: 40px; }
+      .survey-right { position: static; }
+      .radio-group-wrap { flex-direction: column; }
+      .calendly-card { padding: 24px; }
+
+      /* Footer */
+      footer { padding: 32px 20px; flex-direction: column; align-items: flex-start; gap: 8px; }
+    }
+
+    @media (max-width: 480px) {
+      .stat-row { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 30px; }
+      .dashboard-inner { padding: 10px; }
+      .cost-grid .cost-row { flex-direction: column; gap: 4px; align-items: flex-start; }
+      .signal-tags { gap: 6px; }
+      .signal-tag { font-size: 10px; padding: 3px 8px; }
+      .hero-badge { font-size: 11px; padding: 5px 12px; text-align: center; }
     }
   </style>
 </head>
@@ -519,6 +641,7 @@
   <div class="nav-logo">Bean<span>sight</span></div>
   <div class="nav-links">
     <a href="#how">How it works</a>
+    <a href="#platform">Platform</a>
     <a href="#pos">Integrations</a>
     <a href="#waitlist" class="nav-cta">Get Early Access</a>
   </div>
@@ -556,7 +679,7 @@
         <div class="stat-row">
           <div class="stat-card">
             <div class="stat-label">Predicted Sales</div>
-            <div class="stat-value">£ 1287</div>
+            <div class="stat-value">£ 487</div>
             <div class="stat-pill pill-green">↑ 12% vs last Wed</div>
             <div class="stat-sub">Confidence: high</div>
           </div>
@@ -782,6 +905,55 @@
   </div>
 </section>
 
+<!-- PLATFORM PILLARS -->
+<section class="platform-section" id="platform">
+  <div class="platform-inner">
+    <div class="section-eyebrow">The full platform</div>
+    <div class="section-title">Everything your cafe needs<br/>to run <em>one step ahead</em></div>
+    <div class="pillars-grid">
+
+      <div class="pillar-card pillar-active">
+        <div class="pillar-icon">📈</div>
+        <div class="pillar-tag">Core feature</div>
+        <h3>Sales Forecasting</h3>
+        <p>Predict your next 30 days of revenue using your POS data combined with up to 10 external signals — weather, local events, holidays, and more.</p>
+        <ul class="pillar-list">
+          <li>✦ Optimised daily staffing levels</li>
+          <li>✦ Reduced operational risk</li>
+          <li>✦ Smarter inventory management</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">👥</div>
+        <div class="pillar-tag pillar-tag-blue">Coming soon</div>
+        <h3>Staff-on-Demand</h3>
+        <p>Access a pool of verified, experienced cafe staff to fill unexpected gaps — so you never face a short-staffed shift again.</p>
+        <ul class="pillar-list">
+          <li>✦ Flexible cover for last-minute gaps</li>
+          <li>✦ Verified baristas & front-of-house</li>
+          <li>✦ Operational continuity guaranteed</li>
+        </ul>
+      </div>
+
+      <div class="pillar-card">
+        <div class="pillar-icon">🎯</div>
+        <div class="pillar-tag pillar-tag-blue">Coming soon</div>
+        <h3>Smart Marketing</h3>
+        <p>Create and schedule high-impact campaigns at exactly the right moment — driven by your sales data, not guesswork.</p>
+        <ul class="pillar-list">
+          <li>✦ Personalised campaigns per segment</li>
+          <li>✦ Timing optimised to your forecast</li>
+          <li>✦ Performance feedback loop built-in</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+
 <!-- PMF SURVEY + CALENDLY -->
 <section class="survey-section" id="survey">
   <div class="survey-inner">
@@ -834,10 +1006,22 @@
             <label class="radio-opt"><input type="checkbox" name="challenge" value="staffing" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Staffing levels</label>
             <label class="radio-opt"><input type="checkbox" name="challenge" value="cashflow" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Cash flow visibility</label>
             <label class="radio-opt"><input type="checkbox" name="challenge" value="footfall" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Unpredictable footfall</label>
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="marketing" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Marketing & customer retention</label>
+            <label class="radio-opt"><input type="checkbox" name="challenge" value="lastminute" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> Last-minute staff shortages</label>
           </div>
         </div>
 
         <!-- Q5 -->
+        <div class="survey-field">
+          <label>Which BeanSight features interest you most? <span style="color:var(--text-muted);font-weight:400">(select all that apply)</span></label>
+          <div class="radio-group">
+            <label class="radio-opt"><input type="checkbox" name="feature" value="forecast" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> 📈 Sales forecasting (next 30 days)</label>
+            <label class="radio-opt"><input type="checkbox" name="feature" value="staffondemand" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> 👥 Staff-on-demand (verified cover staff)</label>
+            <label class="radio-opt"><input type="checkbox" name="feature" value="marketing" style="accent-color:var(--amber);width:15px;height:15px;flex-shrink:0;"/> 🎯 Smart marketing assistant</label>
+          </div>
+        </div>
+
+        <!-- Q6 -->
         <div class="survey-field">
           <label>How likely are you to pay for a tool like BeanSight?</label>
           <div class="radio-group">
